@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
-import { CustRegexComponent } from './cust-regex/cust-regex.component';
 
 /*Material Design and Flex Layout*/
 import { MaterialModule } from '@angular/material';
@@ -19,7 +18,6 @@ import {AdsenseModule} from 'ng2-adsense';
 @NgModule({
   declarations: [
     AppComponent,
-    CustRegexComponent
   ],
   imports: [
     BrowserModule,

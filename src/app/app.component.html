@@ -1,5 +1,166 @@
-<md-toolbar color="primary">
-  <b>Junkseeker</b> - <i>beautify your text by removing unnecessary white spaces</i>
-</md-toolbar>
-<app-cust-regex></app-cust-regex>
+<md-toolbar color="primary" layout="row" layout-align="space-between"> Junkseeker </md-toolbar>
 
+<md-sidenav-container>
+  <md-sidenav mode="side" align="end" opened>
+    <section class="flex-container" fxLayout="column" fxLayoutAlign="start stretch"> 
+      <md-input-container> 
+        <textarea mdInput name="inputArea" placeholder="Enter Your Text Here" rows ="14" cols="40" [(ngModel)] = "strI"></textarea> 
+      </md-input-container>
+
+
+      <section class="flex-container" fxLayout="column" fxLayout.gt-xs = "row" fxLayoutAlign="space-around"> 
+
+        <button class="btn" md-raised-button color="accent" (click)="removeWhiteSpace()"> 
+          <p>Convert Text</p> 
+        </button>
+
+        <button class="btn"  md-raised-button color="accent" data-clipboard-target="#area2"> 
+          Copy to Clipboard 
+        </button>
+
+        <button class="btn" md-raised-button color="warn" (click)="reset()"> 
+          Reset 
+        </button>
+      </section>
+
+
+      <!-- Output Tile-->
+      <md-input-container>
+        <textarea mdInput id="area2" name="outputArea" placeholder="Copy Your Formatted Text Here" rows="14" cols="40" [(ngModel)] = "strO">
+        </textarea> 
+      </md-input-container>
+    </section>
+
+    <button md-fab color="warn" (click)="sidenav.close()">
+      <md-icon>close</md-icon>
+    </button>
+  </md-sidenav>
+
+  <!--Writing System -->
+  <md-card>
+    <md-card-title> 
+      Please Choose the Writing System
+    </md-card-title>
+
+    <md-card-subtitle>
+      Words in an alphabet based language are typically seperated by spaces. However, there're normally no space between characters in a language like Chinese.  
+    </md-card-subtitle>
+
+    <md-radio-group class="flex-container" fxLayout="column" fxLayoutAlign="space-around" [(ngModel)]="alphabetOrChar"> 
+      <md-radio-button value="alphabet">
+        Alphabet Based Language eg. English
+      </md-radio-button>
+      <md-radio-button value="character">
+        Character Based Language eg. Chinese
+      </md-radio-button>
+    </md-radio-group>
+  </md-card>
+
+  <!-- punctuation rules --> 
+  <md-card>
+    <md-card-title> 
+      Would you like to apply the following punctuation rules?
+    </md-card-title>
+
+    <md-card-subtitle>
+      Rule 1:<br>
+      Use only one space following periods, comas, semicolons, exclamation marks, question marks. <br>
+      <br>
+      Rule 2:<br>
+      Use no spaces on either side of a hyphen.
+    </md-card-subtitle>
+
+    <md-radio-group class="flex-container" fxLayout="column" fxLayoutAlign="space-around" [(ngModel)]="punctuationSpacingYesNo"> 
+      <md-radio-button value="yes">Yes</md-radio-button>
+      <md-radio-button value="no">No</md-radio-button>
+    </md-radio-group>
+  </md-card>
+
+  <!-- Choice Card --> 
+  <md-card>
+    <md-card-title> 
+      Remove Line Break? 
+    </md-card-title>
+    <md-radio-group class="flex-container" fxLayout="column" fxLayoutAlign="space-around" [(ngModel)]="linebreaksToSpaceYesNo"> 
+      <md-radio-button value="yes">Yes</md-radio-button>
+      <md-radio-button value="no">No</md-radio-button>
+    </md-radio-group>
+
+    <!-- example --> 
+    <md-card> 
+      <md-card-title>Example</md-card-title>
+      <md-card>
+        <md-card-title>Input</md-card-title>
+        <md-card-content>
+          <p [innerHtml]="linebreakToSpaceExampleInput"></p>
+        </md-card-content>
+      </md-card>
+      <md-card>
+        <md-card-title>Output</md-card-title>
+        <md-card-content>
+          <p [innerHtml]="linebreakToSpaceExampleOutput"></p>
+        </md-card-content>
+      </md-card>
+    </md-card>
+  </md-card>
+
+
+  <!-- Choice Card --> 
+  <md-card>
+    <md-card-title> 
+      Convert All White Space Characters to Space?
+    </md-card-title>
+    <md-radio-group class="flex-container" fxLayout="column" fxLayoutAlign="space-around" [(ngModel)]="whiteSpaceToSpaceYesNo"> 
+      <md-radio-button value="yes">Yes</md-radio-button>
+      <md-radio-button value="no">No</md-radio-button>
+    </md-radio-group>
+
+    <!-- example --> 
+    <md-card> 
+      <md-card-title>Example</md-card-title>
+      <md-card>
+        <md-card-title>Input</md-card-title>
+        <md-card-content>
+          <p [innerHtml]="whiteSpaceToSpaceExampleInput"></p>
+        </md-card-content>
+      </md-card>
+      <md-card>
+        <md-card-title>Output</md-card-title>
+        <md-card-content>
+          <p [innerHtml]="linebreakToSpaceExampleOutput"></p>
+        </md-card-content>
+      </md-card>
+    </md-card>
+  </md-card>
+
+  <!-- Choice Card --> 
+  <md-card>
+    <md-card-title> 
+      Convert Consecutive White Spaces a Single Space?
+    </md-card-title>
+    <md-radio-group class="flex-container" fxLayout="column" fxLayoutAlign="space-around" [(ngModel)]="consecutiveSpacetoOneYesNo"> 
+      <md-radio-button value="yes">Yes</md-radio-button>
+      <md-radio-button value="no">No</md-radio-button>
+    </md-radio-group>
+
+    <!-- example --> 
+    <md-card> 
+      <md-card-title>Example</md-card-title>
+      <md-card>
+        <md-card-title>Input</md-card-title>
+        <md-card-content>
+          <p [innerHtml]="consecutiveSpacetoOneExampleInput"></p>
+        </md-card-content>
+      </md-card>
+      <md-card>
+        <md-card-title>Output</md-card-title>
+        <md-card-content>
+          <p [innerHtml]="consecutiveSpacetoOneExampleOutput"></p>
+        </md-card-content>
+      </md-card>
+    </md-card>
+  </md-card>
+
+
+
+</md-sidenav-container>

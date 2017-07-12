@@ -1,3 +1,22 @@
-i {
-  font-size: 0.8em;
+// Import theming functions
+@import '~@angular/material/theming';
+// Import your custom theme
+@import 'src/theme.scss';
+
+textarea {
+  resize: none;
+}
+
+md-sidenav {
+  width: 60vw; 
+}
+
+md-card {
+  margin-top: 12px;
+}
+
+.md-fab {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
 }
