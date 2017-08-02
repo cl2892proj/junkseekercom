@@ -1,10 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import * as Clipboard from 'clipboard';
 
-import {MdButtonModule} from '@angular/material';
-import {MdCheckboxModule} from '@angular/material';
-import {MdIconModule} from '@angular/material';
-import {MdSidenav} from '@angular/material';
+import { MdButtonModule, 
+  MdCheckboxModule,
+  MdIconModule,
+  MdToolbarModule
+} from '@angular/material';
+
+//import {MdSidenav} from '@angular/material';
 
 @Component({
   selector: 'app-root',
@@ -24,24 +27,23 @@ export class AppComponent implements OnInit {
   strO: String;
   strT: String; //temporary string
   cb: Clipboard;
-  @ViewChild(MdSidenav) sidenav: MdSidenav;
+  //@ViewChild(MdSidenav) sidenav: MdSidenav;
 
   linebreakToSpaceExampleInput: String =
-    'The<br>quick<br>brown<br>fox jumps over<br>the<br>lazy<br>dog.';
+`Victory is\nreserved for those\nwilling\nto pay its price.\n--Sun Tzu`;
   linebreakToSpaceExampleOutput: String = 
-    'The quick brown fox jumps over the lazy dog.';
+`Victory is reserved for those willing to pay its price. --Sun Tzu`;
 
   whiteSpaceToSpaceExampleInput: String =
-    'The<code>&#9;</code>quick<code>&#9;</code>brown<br>fox jumps over<code>&#9;</code>the<code>&#9;</code>lazy<br>dog.';
+`Judge a\tman by his\nquestions\trather than\this answers. Voltaire`;
   whiteSpaceToSpaceExampleOutput: String = 
-    'The quick brown fox jumps over the lazy dog.';
+`Judge a man by his questions rather than his answers. Voltaire`;
 
 
   consecutiveSpacetoOneExampleInput: String =
-    'The<code>&#9;</code><code>&#9;</code><code>&#9;</code>quick<code>&#9;</code>brown<br><br><br>fox jumps over<code>&#9;</code><br>the<code>&#9;</code>lazy<br>dog.';
+`The\t  \tquick\t\tbrown fox jumps over the\t\nlazy\tdog.`;
   consecutiveSpacetoOneExampleOutput: String = 
-    'The quick brown fox jumps over the lazy dog.';
-
+`The quick brown fox jumps over the lazy dog.`;
 
   constructor() { }
 
@@ -52,33 +54,38 @@ export class AppComponent implements OnInit {
     this.whiteSpaceToSpaceYesNo = "yes"; 
     this.consecutiveSpacetoOneYesNo = "yes"; 
     this.punctuationSpacingYesNo = "yes";
-
   }
 
   removeWhiteSpace(): void{
     this.strT = this.strI; 
 
     if(this.punctuationSpacingYesNo === "yes"){
-      //rule one: one space after those characters
-      this.strT = this.strT.replace(/(,|\.|:|;|!|\?)/g, '$1 ')
-    }
-
-    if(this.linebreaksToSpaceYesNo === "yes"){
-      this.strT = this.strT.replace(/\n/g, ' ')
-    }
-
-    if(this.whiteSpaceToSpaceYesNo === "yes"){
-      this.strT = this.strT.replace(/\s/g, ' ')
-    }
-
-    if(this.consecutiveSpacetoOneYesNo === "yes"){
-      this.strT = this.strT.replace(/\s{2,}/g, ' ')
+      //rule 2: no space on either side of a hyphen or apostrophe
+      this.strT = this.strT.replace(/\s+(-|')\s+/g, '$1');
     }
 
     if(this.punctuationSpacingYesNo === "yes"){
-      //rule two: no space on either side of a hyphen
-      this.strT = this.strT.replace(/\s+_\s+/g, '_')
+      //rule 1: one space after those characters
+      this.strT = this.strT.replace(/(,|\.|:|;|!|\?)\s*/g, '$1 ');
     }
+
+    if(this.punctuationSpacingYesNo === "yes"){
+      //rule 3: no space between those punctuations when they are next to each other: .|:|!|?|-;
+      this.strT = this.strT.replace(/(\.|:|;|!|\?)\s+(\.|:|;|!|\?)/g, '$1$2');
+    }
+
+    if(this.linebreaksToSpaceYesNo === "yes"){
+      this.strT = this.strT.replace(/\n/g, ' ');
+    }
+
+    if(this.whiteSpaceToSpaceYesNo === "yes"){
+      this.strT = this.strT.replace(/\s/g, ' ');
+    }
+
+    if(this.consecutiveSpacetoOneYesNo === "yes"){
+      this.strT = this.strT.replace(/\s{1,}/g, ' ');
+    }
+
 
 
     //common punctuation not followed by punctuation

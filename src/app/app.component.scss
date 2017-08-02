@@ -3,20 +3,43 @@
 // Import your custom theme
 @import 'src/theme.scss';
 
+
 textarea {
   resize: none;
-}
-
-md-sidenav {
-  width: 60vw; 
 }
 
 md-card {
   margin-top: 12px;
 }
 
-.md-fab {
-  position: absolute;
-  bottom: 20px;
-  left: 20px;
+/*
+md-sidenav {
+  width: 40vw; 
 }
+
+
+*/
+
+p {
+  white-space: pre-wrap;
+}
+
+.example-sidenav-fab-container {
+  height: 95vw;
+}
+
+.example-sidenav-fab-container md-sidenav {
+  //max-width: 200px;
+
+}
+
+.example-scrolling-content {
+  overflow: auto;
+}
+
+.example-fab {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+}
+
